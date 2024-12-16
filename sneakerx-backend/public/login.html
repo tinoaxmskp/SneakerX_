@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SneakerX Login</title>
+
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- Header -->
+<section id="header">
+  <a href="index.html"><img src="img/logo.png" class="logo" alt="SneakerX Logo"></a>
+  <div>
+    <ul id="navbar">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li id="user-menu"><a href="login.html">Login</a></li>
+      <li id="lg-bag"><a href="cart.html"><i class="far fa-shopping-bag"></i></a></li>
+      <a href="#" id="close"><i class="far fa-times"></i></a>
+    </ul>
+  </div>
+  <div id="mobile">
+    <a href="cart.html"><i class="far fa-shopping-bag"></i></a>
+    <i id="bar" class="fas fa-outdent"></i>
+  </div>
+</section>
+
+<!-- Page Header -->
+<section id="page-header" class="about-header">
+  <h2>Login</h2>
+  <p>Access your account to manage your orders and more!</p>
+</section>
+
+<!-- Login Section -->
+<section id="login" class="section-p1">
+  <div class="login-container">
+    <h2>Login to Your Account</h2>
+    <form id="login-form">
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit" class="normal">Login</button>
+
+      <button class="normal" onclick="redirectToRegister()">Register</button>
+    </form>
+
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="section-p1">
+  <div class="col">
+    <img class="logo" src="img/logo.png" alt="SneakerX Logo">
+    <h4>Contact</h4>
+    <p><strong>Address:</strong> Stefana Banacha 22, 90-238 Łódź Polska</p>
+    <p><strong>Phone:</strong> +48 111 111 111</p>
+  </div>
+
+  <div class="col payment">
+    <h4>Payment</h4>
+    <p>Secured Payment Gateways</p>
+    <img src="img/pay/pay.png" alt="Payment Methods">
+  </div>
+
+  <div class="copyright">
+    <p>© 2024, SneakerX</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  // Login Form Submission
+  document.getElementById('login-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if (!email || !password) {
+      alert('Please enter both email and password.');
+      return;
+    }
+
+    // Send login request to backend
+    fetch('http://localhost:5000/api/login', { // Update with backend URL
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                // Save token to localStorage
+                localStorage.setItem('token', data.token);
+                // Update Navbar
+                updateNavbar();
+                // Redirect to My Account page
+                window.location.href = 'my-account.html';
+              } else {
+                alert('Invalid email or password.');
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              alert('An error occurred during login.');
+            });
+  });
+
+  // Redirect to Register Page
+  function redirectToRegister() {
+    window.location.href = 'register.html';
+  }
+</script>
+
+</body>
+
+</html>

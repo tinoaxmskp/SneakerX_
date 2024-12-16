@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4ecdf7e1-251f-4023-83f1-356d21c9f066" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/about.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkout.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/contact.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/about/a6.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/about/banner.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/banner/b1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/banner/b10.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/banner/b17.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/banner/b2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/button.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/features/f1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/features/f2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/features/f3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/features/f4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/features/f5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/features/f6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/hero4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/pay/pay.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/products/f1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/products/f2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/products/f3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/products/f4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/products/f5.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/products/f6.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/products/f7.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/products/f8.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/products/n1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/products/n2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/products/n3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/products/n4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/products/n5.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/products/n6.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/products/n7.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/products/n8.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my-account.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-details.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/product.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profile.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/register.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/script.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shop.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/thankyou.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/update-informations.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view-orders.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2qG0ZgkFQ8b7KgVjameBTpzYo4O" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;JavaScript Debug.about.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.cart.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.checkout.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.contact.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.index.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.login.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.may-account.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.my-account.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.order-details.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.product.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.shop.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.sproduct.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.thankyou.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.update-informations.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.view-orders.html.executor&quot;: &quot;Run&quot;,
+    &quot;Node.js.script.js.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/macbookpro/Desktop/SneakerX_&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.grazie&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-WS-242.23339.15" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4ecdf7e1-251f-4023-83f1-356d21c9f066" name="Changes" comment="" />
+      <created>1734273662021</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1734273662021</updated>
+      <workItem from="1734273663065" duration="369000" />
+      <workItem from="1734274055041" duration="6257000" />
+      <workItem from="1734280574909" duration="3507000" />
+      <workItem from="1734284464802" duration="281000" />
+      <workItem from="1734284905712" duration="17122000" />
+      <workItem from="1734305636570" duration="8000" />
+      <workItem from="1734305648613" duration="1152000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

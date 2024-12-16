@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SneakerX Checkout</title>
+
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- Header -->
+<section id="header">
+    <a href="index.html"><img src="img/logo.png" class="logo" alt="SneakerX Logo"></a>
+    <div>
+        <ul id="navbar">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li id="user-menu"><a href="my-account.html">My Account</a></li>
+            <li id="lg-bag"><a href="cart.html"><i class="far fa-shopping-bag"></i></a></li>
+            <a id="close" href="#"><i class="far fa-times"></i></a>
+        </ul>
+    </div>
+    <div id="mobile">
+        <a href="cart.html"><i class="far fa-shopping-bag"></i></a>
+        <i id="bar" class="fas fa-outdent"></i>
+    </div>
+</section>
+
+<!-- Page Header -->
+<section id="page-header" class="about-header">
+    <h2>Checkout</h2>
+    <p>Complete your purchase by providing the necessary information.</p>
+</section>
+
+<!-- Checkout Form -->
+<section id="checkout" class="section-p1">
+    <div class="checkout-container">
+        <h2>Shipping Information</h2>
+        <form id="checkout-form">
+            <div class="form-group">
+                <label for="full-name">Full Name:</label>
+                <input type="text" id="full-name" name="fullName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+
+            <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" required>
+            </div>
+
+            <div class="form-group">
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" required>
+            </div>
+
+            <div class="form-group">
+                <label for="zip">ZIP Code:</label>
+                <input type="text" id="zip" name="zip" required>
+            </div>
+
+            <h2>Payment Information</h2>
+
+            <div class="form-group">
+                <label for="card-number">Card Number:</label>
+                <input type="text" id="card-number" name="cardNumber" required>
+            </div>
+
+            <div class="form-group">
+                <label for="expiry">Expiry Date:</label>
+                <input type="text" id="expiry" name="expiry" placeholder="MM/YY" required>
+            </div>
+
+            <div class="form-group">
+                <label for="cvv">CVV:</label>
+                <input type="text" id="cvv" name="cvv" required>
+            </div>
+
+            <button type="submit" class="normal">Complete Purchase</button>
+        </form>
+    </div>
+
+    <div class="order-summary">
+        <h2>Order Summary</h2>
+        <table>
+            <tr>
+                <td>Cart Subtotal</td>
+                <td id="summary-subtotal">$0</td>
+            </tr>
+            <tr>
+                <td>Shipping</td>
+                <td>Free</td>
+            </tr>
+            <tr>
+                <td><strong>Total</strong></td>
+                <td id="summary-total"><strong>$0</strong></td>
+            </tr>
+        </table>
+        <button class="normal" onclick="proceedToCheckout()">Proceed to checkout</button>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="section-p1">
+    <div class="col">
+        <img class="logo" src="img/logo.png" alt="SneakerX Logo">
+        <h4>Contact</h4>
+        <p><strong>Address:</strong> Stefana Banacha 22, 90-238 Łódź Polska</p>
+        <p><strong>Phone:</strong> +48 111 111 111</p>
+    </div>
+
+    <div class="col payment">
+        <h4>Payment</h4>
+        <p>Secured Payment Gateways</p>
+        <img src="img/pay/pay.png" alt="Payment Methods">
+    </div>
+
+    <div class="copyright">
+        <p>© 2024, SneakerX</p>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+    // Fetch and display order summary
+    function fetchOrderSummary() {
+        fetch('http://localhost:5000/api/cart', { // Update with your backend URL
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const cartItems = data.cart;
+                    let subtotal = 0;
+
+                    cartItems.forEach(item => {
+                        subtotal += item.price * item.quantity;
+                    });
+
+                    document.getElementById('summary-subtotal').innerText = `$${subtotal.toFixed(2)}`;
+                    document.getElementById('summary-total').innerHTML = `<strong>$${subtotal.toFixed(2)}</strong>`;
+                }
+            })
+            .catch(error => console.error('Error fetching cart:', error));
+    }
+
+    // Call fetchOrderSummary on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchOrderSummary();
+    });
+
+    // Handle checkout form submission
+    document.getElementById('checkout-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Get form data
+        const fullName = document.getElementById('full-name').value.trim();
+        const address = document.getElementById('address').value.trim();
+        const city = document.getElementById('city').value.trim();
+        const state = document.getElementById('state').value.trim();
+        const zip = document.getElementById('zip').value.trim();
+        const cardNumber = document.getElementById('card-number').value.trim();
+        const expiry = document.getElementById('expiry').value.trim();
+        const cvv = document.getElementById('cvv').value.trim();
+
+        // Simple validation
+        if (!fullName || !address || !city || !state || !zip || !cardNumber || !expiry || !cvv) {
+            alert('Please fill in all fields.');
+            return;
+        }
+
+        // Prepare order data
+        const orderData = {
+            fullName,
+            address,
+            city,
+            state,
+            zip,
+            payment: {
+                cardNumber,
+                expiry,
+                cvv
+            }
+        };
+
+        // Send order data to backend
+        fetch('http://localhost:5000/api/checkout', { // Update with your backend URL
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(orderData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Your order has been placed successfully!');
+                    window.location.href = `thankyou.html?id=${data.orderId}`;
+                } else {
+                    alert('Failed to place order: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while placing your order.');
+            });
+    });
+</script>
+</body>
+
+</html>

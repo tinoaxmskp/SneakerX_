@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SneakerX Register</title>
+
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- Header -->
+<section id="header">
+  <a href="index.html"><img src="img/logo.png" class="logo" alt="SneakerX Logo"></a>
+  <div>
+    <ul id="navbar">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li id="user-menu"><a href="login.html">Login</a></li>
+      <li id="lg-bag"><a href="cart.html"><i class="far fa-shopping-bag"></i></a></li>
+      <a href="#" id="close"><i class="far fa-times"></i></a>
+    </ul>
+  </div>
+  <div id="mobile">
+    <a href="cart.html"><i class="far fa-shopping-bag"></i></a>
+    <i id="bar" class="fas fa-outdent"></i>
+  </div>
+</section>
+
+<!-- Page Header -->
+<section id="page-header" class="about-header">
+  <h2>Register</h2>
+  <p>Create your account to enjoy our services.</p>
+</section>
+
+<!-- Register Section -->
+<section id="register" class="section-p1">
+  <div class="register-container">
+    <h2>Create Your Account</h2>
+    <form id="register-form">
+      <div class="form-group">
+        <label for="full-name">Full Name:</label>
+        <input type="text" id="full-name" name="fullName" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" required>
+      </div>
+
+      <div class="form-group">
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" required>
+      </div>
+
+      <div class="form-group">
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state" required>
+      </div>
+
+      <div class="form-group">
+        <label for="zip">ZIP Code:</label>
+        <input type="text" id="zip" name="zip" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+
+      <div class="form-group">
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" id="confirm-password" name="confirmPassword" required>
+      </div>
+
+      <button type="submit" class="normal">Register</button>
+    </form>
+  </div>
+</section>
+
+<!-- Footer Section -->
+<footer class="section-p1">
+  <div class="col">
+    <img class="logo" src="img/logo.png" alt="SneakerX Logo">
+    <h4>Contact</h4>
+    <p><strong>Address:</strong> Stefana Banacha 22, 90-238 Łódź Polska</p>
+    <p><strong>Phone:</strong> +48 111 111 111</p>
+  </div>
+
+  <div class="col payment">
+    <h4>Payment</h4>
+    <p>Secured Payment Gateways</p>
+    <img src="img/pay/pay.png" alt="Payment Methods">
+  </div>
+
+  <div class="copyright">
+    <p>© 2024, SneakerX</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  // Register Form Submission
+  document.getElementById('register-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const fullName = document.getElementById('full-name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const city = document.getElementById('city').value.trim();
+    const state = document.getElementById('state').value.trim();
+    const zip = document.getElementById('zip').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const confirmPassword = document.getElementById('confirm-password').value.trim();
+
+    if (!fullName || !email || !address || !city || !state || !zip || !password || !confirmPassword) {
+      alert('Please fill in all fields.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert('Passwords do not match.');
+      return;
+    }
+
+    // Send registration data to backend
+    fetch('http://localhost:5000/api/register', { // Update with your backend URL
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fullName, email, address, city, state, zip, password })
+    })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                alert('Registration successful! You can now login.');
+                window.location.href = 'login.html';
+              } else {
+                alert('Registration failed: ' + data.message);
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              alert('An error occurred during registration.');
+            });
+  });
+</script>
+
+</body>
+
+</html>

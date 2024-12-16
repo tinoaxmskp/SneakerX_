@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SneakerX My Account</title>
+
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- Header -->
+<section id="header">
+  <a href="index.html"><img src="img/logo.png" class="logo" alt="SneakerX Logo"></a>
+  <div>
+    <ul id="navbar">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li id="user-menu"><a href="my-account.html">My Account</a></li>
+      <li><a href="#" id="logout-btn" style="display: none;">Logout</a></li>
+      <li id="lg-bag"><a href="cart.html"><i class="far fa-shopping-bag"></i></a></li>
+      <a href="#" id="close"><i class="far fa-times"></i></a>
+    </ul>
+  </div>
+  <div id="mobile">
+    <a href="cart.html"><i class="far fa-shopping-bag"></i></a>
+    <i id="bar" class="fas fa-outdent"></i>
+  </div>
+</section>
+
+<!-- Page Header -->
+<section id="page-header" class="about-header">
+  <h2>My Account</h2>
+  <p>Manage your personal information and orders.</p>
+</section>
+
+<!-- My Account Section -->
+<section id="my-account" class="section-p1">
+  <div class="account-container">
+    <h2>Personal Information</h2>
+    <div class="info-group">
+      <p><strong>Full Name:</strong> <span id="user-fullname">Loading...</span></p>
+      <p><strong>Email:</strong> <span id="user-email">Loading...</span></p>
+      <p><strong>Address:</strong> <span id="user-address">Loading...</span></p>
+    </div>
+    <div class="button-group">
+      <button class="normal" onclick="redirectToUpdate()">Update Information</button>
+      <button class="normal" onclick="redirectToViewOrders()">View Orders</button>
+      <button class="normal" onclick="logout()">Logout</button>
+    </div>
+  </div>
+</section>
+
+<script src="script.js"></script>
+<script>
+  // Display user information
+  function displayUserInfo() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = 'login.html';
+      return;
+    }
+
+    fetch('http://localhost:5000/api/profile', { // Update with your backend URL
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                const user = data.user;
+                document.getElementById('user-fullname').innerText = user.fullName;
+                document.getElementById('user-email').innerText = user.email;
+                document.getElementById('user-address').innerText = `${user.address}, ${user.city}, ${user.state}, ${user.zip}`;
+              } else {
+                alert('Failed to fetch user information.');
+                window.location.href = 'login.html';
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              alert('An error occurred while fetching user information.');
+            });
+  }
+
+  function redirectToUpdate() {
+    window.location.href = 'update-informations.html';
+  }
+
+  function redirectToViewOrders() {
+    window.location.href = 'view-orders.html';
+  }
+
+  // Logout function
+  function logout() {
+    localStorage.removeItem('token');
+    updateNavbar();
+    window.location.href = 'login.html';
+  }
+
+  // Display user information on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    displayUserInfo();
+  });
+</script>
+
+</body>
+
+</html>

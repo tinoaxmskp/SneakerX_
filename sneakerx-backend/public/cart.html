@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SneakerX Cart</title>
+
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- Header -->
+<section id="header">
+    <a href="index.html"><img src="img/logo.png" class="logo" alt="SneakerX Logo"></a>
+    <div>
+        <ul id="navbar">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li id="user-menu"><a href="login.html">Login</a></li>
+            <li id="lg-bag"><a class="active" href="cart.html"><i class="far fa-shopping-bag"></i></a></li>
+            <a id="close" href="#"><i class="far fa-times"></i></a>
+        </ul>
+    </div>
+    <div id="mobile">
+        <a href="cart.html"><i class="far fa-shopping-bag"></i></a>
+        <i id="bar" class="fas fa-outdent"></i>
+    </div>
+</section>
+
+<!-- Page Header -->
+<section id="page-header" class="about-header">
+    <h2>#cart</h2>
+    <p>Add your coupon code & SAVE up to 70%!</p>
+</section>
+
+<!-- Cart Section -->
+<section id="cart" class="section-p1">
+    <table>
+        <thead>
+        <tr>
+            <td>Remove</td>
+            <td>Image</td>
+            <td>Product</td>
+            <td>Price</td>
+            <td>Quantity</td>
+            <td>Subtotal</td>
+        </tr>
+        </thead>
+
+        <tbody id="cart-items">
+        <!-- Cart items will be injected here dynamically -->
+        </tbody>
+    </table>
+</section>
+
+<!-- Cart Add and Subtotal Section -->
+<section id="cart-add" class="section-p1">
+    <div id="coupon">
+        <h3>Apply Coupon</h3>
+        <div>
+            <input type="text" id="coupon-code" placeholder="Enter Your Coupon">
+            <button class="normal" onclick="applyCoupon()">Apply</button>
+        </div>
+    </div>
+
+    <div id="subtotal">
+        <h3>Cart Totals</h3>
+        <table>
+            <tr>
+                <td>Cart Subtotal</td>
+                <td id="cart-subtotal">$0</td>
+            </tr>
+            <tr>
+                <td>Shipping</td>
+                <td>Free</td>
+            </tr>
+            <tr>
+                <td><strong>Total</strong></td>
+                <td id="cart-total"><strong>$0</strong></td>
+            </tr>
+        </table>
+        <button class="normal" onclick="proceedToCheckout()">Proceed to checkout</button>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="section-p1">
+    <div class="col">
+        <img class="logo" src="img/logo.png" alt="SneakerX Logo">
+        <h4>Contact</h4>
+        <p><strong>Address:</strong> Stefana Banacha 22, 90-238 Łódź Polska</p>
+        <p><strong>Phone:</strong> +48 111 111 111</p>
+    </div>
+
+    <div class="col payment">
+        <h4>Payment</h4>
+        <p>Secured Payment Gateways</p>
+        <img src="img/pay/pay.png" alt="Payment Methods">
+    </div>
+
+    <div class="copyright">
+        <p>© 2024, SneakerX</p>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+    // Fetch and display cart items
+    fetch('http://localhost:5000/api/cart', { // Update with your backend URL
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const cartItems = data.cart;
+                const cartItemsContainer = document.getElementById('cart-items');
+                let subtotal = 0;
+
+                cartItems.forEach(item => {
+                    subtotal += item.price * item.quantity;
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                            <td><a href="#" class="remove-item" data-id="${item.id}"><i class="far fa-times-circle"></i></a></td>
+                            <td><img src="${item.image}" alt="${item.name}" width="50"></td>
+                            <td>${item.name} - Size: ${item.size}</td>
+                            <td>$${item.price.toFixed(2)}</td>
+                            <td><input type="number" value="${item.quantity}" min="1" data-id="${item.id}" class="quantity-input"></td>
+                            <td>$${(item.price * item.quantity).toFixed(2)}</td>
+                        `;
+                    cartItemsContainer.appendChild(row);
+                });
+
+                document.getElementById('cart-subtotal').innerText = `$${subtotal.toFixed(2)}`;
+                document.getElementById('cart-total').innerHTML = `<strong>$${subtotal.toFixed(2)}</strong>`;
+
+                attachCartEventListeners();
+            } else {
+                alert('Failed to fetch cart.');
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching cart:', error);
+            alert('An error occurred while fetching the cart.');
+        });
+
+    // Apply coupon functionality
+    function applyCoupon() {
+        const coupon = document.getElementById('coupon-code').value.trim();
+        if (coupon === 'SAVE70') {
+            const subtotal = parseFloat(document.getElementById('cart-subtotal').innerText.replace('$', ''));
+            const total = subtotal * 0.3;
+            document.getElementById('cart-total').innerHTML = `<strong>$${total.toFixed(2)}</strong>`;
+            alert('Coupon applied! You saved 70%.');
+        } else {
+            alert('Invalid coupon code.');
+        }
+    }
+
+    // Proceed to checkout
+    function proceedToCheckout() {
+        window.location.href = 'checkout.html';
+    }
+
+    // Function to handle cart item removal and quantity updates
+    function attachCartEventListeners() {
+        // Remove items
+        const removeButtons = document.querySelectorAll('.remove-item');
+        removeButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const productId = button.getAttribute('data-id');
+                removeFromCart(productId);
+            });
+        });
+
+        // Update quantities
+        const quantityInputs = document.querySelectorAll('.quantity-input');
+        quantityInputs.forEach(input => {
+            input.addEventListener('change', () => {
+                const productId = input.getAttribute('data-id');
+                const newQuantity = parseInt(input.value);
+                if (newQuantity < 1) {
+                    input.value = 1;
+                    return;
+                }
+                updateCartQuantity(productId, newQuantity);
+            });
+        });
+    }
+
+    // Remove item from cart
+    function removeFromCart(itemId) {
+        fetch(`http://localhost:5000/api/cart/${itemId}`, { // Update with your backend URL
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Item removed from cart.');
+                    window.location.reload();
+                } else {
+                    alert('Failed to remove item: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while removing the item.');
+            });
+    }
+
+    // Update cart quantity
+    function updateCartQuantity(itemId, quantity) {
+        fetch(`http://localhost:5000/api/cart/${itemId}`, { // Update with your backend URL
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({ quantity })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Cart updated successfully.');
+                    window.location.reload();
+                } else {
+                    alert('Failed to update cart: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while updating the cart.');
+            });
+    }
+</script>
+</body>
+
+</html>

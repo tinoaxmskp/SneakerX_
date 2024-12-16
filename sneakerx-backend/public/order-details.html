@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SneakerX Order Details</title>
+
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- Header -->
+<section id="header">
+  <a href="index.html"><img src="img/logo.png" class="logo" alt="SneakerX Logo"></a>
+  <div>
+    <ul id="navbar">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li id="user-menu"><a href="my-account.html">My Account</a></li>
+      <li><a href="#" id="logout-btn" style="display: none;">Logout</a></li>
+      <li id="lg-bag"><a href="cart.html"><i class="far fa-shopping-bag"></i></a></li>
+      <a href="#" id="close"><i class="far fa-times"></i></a>
+    </ul>
+  </div>
+  <div id="mobile">
+    <a href="cart.html"><i class="far fa-shopping-bag"></i></a>
+    <i id="bar" class="fas fa-outdent"></i>
+  </div>
+</section>
+
+<!-- Page Header -->
+<section id="page-header" class="about-header">
+  <h2>Order Details</h2>
+  <p>Review the details of your order below.</p>
+</section>
+
+<!-- Order Details Section -->
+<section id="order-details" class="section-p1">
+  <div class="order-details-container">
+    <h2>Order #<span id="order-id">Loading...</span></h2>
+    <p><strong>Date:</strong> <span id="order-date">Loading...</span></p>
+    <p><strong>Status:</strong> <span id="order-status">Loading...</span></p>
+    <h3>Items:</h3>
+    <div id="order-items">
+      <!-- Order items will be injected here dynamically -->
+    </div>
+    <h3>Total: $<span id="order-total">0.00</span></h3>
+  </div>
+</section>
+
+<script src="script.js"></script>
+<script>
+  // Display Order Details
+  function displayOrderDetails() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = 'login.html';
+      return;
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderId = parseInt(urlParams.get('id'));
+
+    if (!orderId) {
+      alert('No order ID provided.');
+      window.location.href = 'view-orders.html';
+      return;
+    }
+
+    // Fetch orders from backend
+    fetch('http://localhost:5000/api/orders', { // Update with your backend URL
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                const order = data.orders.find(o => o.id === orderId);
+                if (order) {
+                  document.getElementById('order-id').innerText = order.id;
+                  document.getElementById('order-date').innerText = order.date;
+                  document.getElementById('order-status').innerText = order.status;
+                  document.getElementById('order-total').innerText = order.total.toFixed(2);
+
+                  const orderItemsContainer = document.getElementById('order-items');
+                  order.items.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.classList.add('order-item');
+                    itemDiv.innerHTML = `
+                                    <img src="${item.image}" alt="${item.name}" width="50">
+                                    <div class="item-info">
+                                        <p><strong>${item.name}</strong></p>
+                                        <p>Quantity: ${item.quantity}</p>
+                                        <p>Size: ${item.size}</p>
+                                        <p>Price: $${item.price.toFixed(2)}</p>
+                                    </div>
+                                `;
+                    orderItemsContainer.appendChild(itemDiv);
+                  });
+                } else {
+                  alert('Order not found.');
+                  window.location.href = 'view-orders.html';
+                }
+              } else {
+                alert('Failed to fetch orders.');
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              alert('An error occurred while fetching order details.');
+            });
+  }
+
+  // Redirect to Order Details Page
+  function redirectToOrderDetails(orderId) {
+    window.location.href = `order-details.html?id=${orderId}`;
+  }
+
+  // Display order details on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    displayOrderDetails();
+  });
+</script>
+
+</body>
+
+</html>

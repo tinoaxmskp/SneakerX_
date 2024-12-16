@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You - SneakerX</title>
+
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- Header -->
+<section id="header">
+  <a href="index.html"><img src="img/logo.png" class="logo" alt="SneakerX Logo"></a>
+  <div>
+    <ul id="navbar">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li id="user-menu"><a href="login.html">Login</a></li>
+      <li id="lg-bag"><a href="cart.html"><i class="far fa-shopping-bag"></i></a></li>
+      <a href="#" id="close"><i class="far fa-times"></i></a>
+    </ul>
+  </div>
+  <div id="mobile">
+    <a href="cart.html"><i class="far fa-shopping-bag"></i></a>
+    <i id="bar" class="fas fa-outdent"></i>
+  </div>
+</section>
+
+<!-- Thank You Section -->
+<section id="thankyou" class="section-p1">
+  <div class="thankyou-container">
+    <h2>Thank You for Your Purchase!</h2>
+    <p>Your order has been successfully placed. You will receive a confirmation email shortly.</p>
+    <button class="normal" onclick="window.location.href='index.html'">Continue Shopping</button>
+  </div>
+</section>
+
+<!-- Footer Section -->
+<footer class="section-p1">
+  <div class="col">
+    <img class="logo" src="img/logo.png" alt="SneakerX Logo">
+    <h4>Contact</h4>
+    <p><strong>Address:</strong> Stefana Banacha 22, 90-238 Łódź Polska</p>
+    <p><strong>Phone:</strong> +48 111 111 111</p>
+  </div>
+
+  <div class="col payment">
+    <h4>Payment</h4>
+    <p>Secured Payment Gateways</p>
+    <img src="img/pay/pay.png" alt="Payment Methods">
+  </div>
+
+  <div class="copyright">
+    <p>© 2024, SneakerX</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  // Subscribe to Newsletter Function
+  function subscribeNewsletter() {
+    subscribeNewsletter('newsletter-email-thankyou');
+  }
+
+  // Email Validation Function
+  function validateEmail(email) {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  }
+</script>
+
+</body>
+
+</html>

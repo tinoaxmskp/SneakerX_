@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SneakerX Product Details</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- Header Section -->
+<section id="header">
+    <a href="index.html"><img src="img/logo.png" class="logo" alt="SneakerX Logo"></a>
+
+    <div>
+        <ul id="navbar">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li id="user-menu"><a href="login.html">Login</a></li>
+            <li id="lg-bag"><a href="cart.html"><i class="far fa-shopping-bag"></i></a></li>
+            <a href="#" id="close"><i class="far fa-times"></i></a>
+        </ul>
+    </div>
+    <div id="mobile">
+        <a href="cart.html"><i class="far fa-shopping-bag"></i></a>
+        <i id="bar" class="fas fa-outdent"></i>
+    </div>
+</section>
+
+<!-- Product Details Section -->
+<section id="prodetails" class="section-p1">
+    <div class="single-pro-image">
+        <img src="img/products/f1.png" width="100%" id="MainImg" alt="Product Image">
+
+        <div class="small-img-group">
+            <div class="small-img-col">
+                <img src="img/products/f1.png" width="100%" class="small-img" alt="Product Image 1">
+            </div>
+            <div class="small-img-col">
+                <img src="img/products/f2.png" width="100%" class="small-img" alt="Product Image 2">
+            </div>
+            <div class="small-img-col">
+                <img src="img/products/f3.png" width="100%" class="small-img" alt="Product Image 3">
+            </div>
+            <div class="small-img-col">
+                <img src="img/products/f4.png" width="100%" class="small-img" alt="Product Image 4">
+            </div>
+        </div>
+    </div>
+    <div class="single-pro-details">
+        <h6 id="product-brand">Brand</h6>
+        <h4 id="product-title">Product Title</h4>
+        <h2 id="product-price">$0.00</h2>
+        <select id="size-select">
+            <option>Select Size</option>
+            <option>Small</option>
+            <option>Medium</option>
+            <option>Large</option>
+            <option>XL</option>
+        </select>
+        <input type="number" value="1" id="quantity" min="1">
+        <button class="normal add-to-cart" id="add-to-cart-button" data-id=""><i class="fal fa-shopping-cart cart"></i> Add To Cart</button>
+        <h4>Product Details</h4>
+        <span id="product-description">Product description goes here...</span>
+    </div>
+</section>
+
+<!-- Footer Section -->
+<footer class="section-p1">
+    <div class="col">
+        <img class="logo" src="img/logo.png" alt="SneakerX Logo">
+        <h4>Contact</h4>
+        <p><strong>Address:</strong> Stefana Banacha 22, 90-238 Łódź Polska</p>
+        <p><strong>Phone:</strong> +48 111 111 111</p>
+    </div>
+
+    <div class="col payment">
+        <h4>Payment</h4>
+        <p>Secured Payment Gateways</p>
+        <img src="img/pay/pay.png" alt="Payment Methods">
+    </div>
+
+    <div class="copyright">
+        <p>© 2024, SneakerX</p>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+    // Product Details Initialization
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+
+        if (!productId) {
+            alert('No product selected.');
+            window.location.href = 'shop.html';
+            return;
+        }
+
+        // Fetch product details from backend
+        fetch(`http://localhost:5000/api/products/${productId}`) // Update with your backend URL
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const product = data.product;
+                    document.getElementById('product-brand').innerText = product.brand;
+                    document.getElementById('product-title').innerText = product.name;
+                    document.getElementById('product-price').innerText = `$${product.price}`;
+                    document.getElementById('product-description').innerText = product.description;
+                    document.getElementById('MainImg').src = product.image;
+
+                    // Update small images
+                    const smallImgs = document.querySelectorAll('.small-img');
+                    smallImgs.forEach((img, index) => {
+                        if (product.images && product.images[index]) {
+                            img.src = product.images[index];
+                        }
+                    });
+
+                    // Update Add to Cart button data-id
+                    document.getElementById('add-to-cart-button').setAttribute('data-id', product.id);
+                } else {
+                    alert('Product not found.');
+                    window.location.href = 'shop.html';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while fetching product details.');
+                window.location.href = 'shop.html';
+            });
+
+        // Add event listeners to small images for main image change
+        const smallImages = document.querySelectorAll('.small-img');
+        smallImages.forEach(img => {
+            img.addEventListener('click', () => {
+                document.getElementById('MainImg').src = img.src;
+            });
+        });
+
+        // Add to Cart Button Event Listener
+        const addToCartButton = document.getElementById('add-to-cart-button');
+        addToCartButton.addEventListener('click', () => {
+            const selectedSize = document.getElementById('size-select').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
+
+            if (selectedSize === 'Select Size') {
+                alert('Please select a size.');
+                return;
+            }
+
+            if (isNaN(quantity) || quantity < 1) {
+                alert('Quantity must be at least 1.');
+                return;
+            }
+
+            const productId = addToCartButton.getAttribute('data-id');
+
+            // Send add to cart request
+            addToCart(productId, selectedSize, quantity);
+        });
+    });
+</script>
+</body>
+
+</html>

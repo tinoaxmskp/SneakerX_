@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SneakerX Shop</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- Header Section -->
+<section id="header">
+    <a href="index.html"><img src="img/logo.png" class="logo" alt="SneakerX Logo"></a>
+
+    <div>
+        <ul id="navbar">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li id="user-menu"><a href="login.html">Login</a></li>
+            <li id="lg-bag"><a href="cart.html"><i class="far fa-shopping-bag"></i></a></li>
+            <a href="#" id="close"><i class="far fa-times"></i></a>
+        </ul>
+    </div>
+    <div id="mobile">
+        <a href="cart.html"><i class="far fa-shopping-bag"></i></a>
+        <i id="bar" class="fas fa-outdent"></i>
+    </div>
+</section>
+
+<!-- Page Header -->
+<section id="page-header" class="about-header">
+    <h2>Shop</h2>
+    <p>Explore our wide range of products.</p>
+</section>
+
+<!-- Shop Section -->
+<section id="shop" class="section-p1">
+    <h2>All Products</h2>
+    <div class="pro-container" id="shop-products">
+        <!-- Products will be injected here dynamically -->
+    </div>
+</section>
+
+<!-- Footer Section -->
+<footer class="section-p1">
+    <div class="col">
+        <img class="logo" src="img/logo.png" alt="SneakerX Logo">
+        <h4>Contact</h4>
+        <p><strong>Address:</strong> Stefana Banacha 22, 90-238 Łódź Polska</p>
+        <p><strong>Phone:</strong> +48 111 111 111</p>
+    </div>
+
+    <div class="col payment">
+        <h4>Payment</h4>
+        <p>Secured Payment Gateways</p>
+        <img src="img/pay/pay.png" alt="Payment Methods">
+    </div>
+
+    <div class="copyright">
+        <p>© 2024, SneakerX</p>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+    // Shop Page Initialization
+    document.addEventListener('DOMContentLoaded', () => {
+        // Fetch all products from backend
+        fetch('http://localhost:5000/api/products') // Update with your backend URL
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const products = data.products;
+                    const shopProductsContainer = document.getElementById('shop-products');
+
+                    products.forEach(product => {
+                        const productDiv = document.createElement('div');
+                        productDiv.classList.add('pro');
+
+                        productDiv.innerHTML = `
+                                <a href="sproduct.html?id=${product.id}">
+                                    <img src="${product.image}" alt="${product.name}">
+                                </a>
+                                <div class="des">
+                                    <span>${product.brand}</span>
+                                    <h5>${product.name}</h5>
+                                    <div class="star">
+                                        ${getStarRatings(product.rating)}
+                                    </div>
+                                    <h4>$${product.price}</h4>
+                                </div>
+                                <button class="normal add-to-cart" data-id="${product.id}"><i class="fal fa-shopping-cart cart"></i> Add to Cart</button>
+                            `;
+
+                        shopProductsContainer.appendChild(productDiv);
+                    });
+                } else {
+                    alert('Failed to load products.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while loading products.');
+            });
+    });
+
+    // Helper Function to Generate Star Ratings
+    function getStarRatings(rating) {
+        let stars = '';
+        const fullStars = Math.floor(rating);
+        const halfStar = rating % 1 >= 0.5;
+
+        for (let i = 0; i < fullStars; i++) {
+            stars += '<i class="fas fa-star"></i>';
+        }
+
+        if (halfStar) {
+            stars += '<i class="fas fa-star-half-alt"></i>';
+        }
+
+        while (stars.length < 5) {
+            stars += '<i class="far fa-star"></i>';
+        }
+
+        return stars;
+    }
+</script>
+</body>
+
+</html>
